@@ -182,7 +182,7 @@
             activeSpg = turf.nearestPoint(turf.point([e.coords.longitude, e.coords.latitude]), spgGeojson);
 
             var distance = turf.distance(turf.point([e.coords.longitude, e.coords.latitude]), activeSpg, { units: 'meters', steps: 360 })
-            if (distance < 9999999999999999999999) {
+            if (distance < 10) {
                 const { Spørgsmål, AnswerA, AnswerB, AnswerC, AnswerD, KorrektSvar } = activeSpg.properties
                 const markup = `
                     <h1 class="div1">${Spørgsmål}</h1>
