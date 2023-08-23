@@ -108,7 +108,7 @@
             const {KorrektSvar, fid} = punkt.properties
             const {latitude,longitude}=gps.coords;
 
-            fetch("http://localhost:3000/collections/answers/items", {
+            fetch("./collections/answers/items", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -145,7 +145,7 @@
 
 
         map.on('load', () => {
-            fetch("http://localhost:3000/collections/spg/items?f=json").then(e => e.json()).then(e => {
+            fetch("./collections/spg/items?f=json").then(e => e.json()).then(e => {
                 spgGeojson = e;
                 map.addSource('spg', {
                     'type': 'geojson',
