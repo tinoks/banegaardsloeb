@@ -1,6 +1,8 @@
-FROM node:10-alpine
+FROM node:18
 
 WORKDIR /usr/src/app
+
+RUN npm i
 
 COPY . .
 
