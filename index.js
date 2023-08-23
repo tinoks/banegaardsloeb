@@ -18,7 +18,7 @@ fastify.register(require('@kortxyz/auth-msal'), { prefix: 'auth' });
 
 fastify.register(require('@kortxyz/ogcapi-gpkg'), {
     baseUrl: 'http://127.0.0.1:3000',
-    gpkg: 'Banegaardsloeb.gpkg',
+    gpkg: 'data/Banegaardsloeb.gpkg',
     skipLandingpage: true,
 })
 
