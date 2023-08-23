@@ -2,26 +2,85 @@
 <html lang="en">
 
 <head>
-    <title>Draw GeoJSON points</title>
+    <title>Scoreboard</title>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
+        table.minimalistBlack {
+            border: 3px solid #000000;
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
         }
 
-        html,
-        body, {
-            height: 100%;
+        table.minimalistBlack td,
+        table.minimalistBlack th {
+            border: 1px solid #000000;
+            padding: 5px 4px;
         }
 
+        table.minimalistBlack tbody td {
+            font-size: 13px;
+        }
+
+        table.minimalistBlack thead {
+            background: #CFCFCF;
+            background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            border-bottom: 3px solid #000000;
+        }
+
+        table.minimalistBlack thead th {
+            font-size: 15px;
+            font-weight: bold;
+            color: #000000;
+            text-align: left;
+        }
+
+        table.minimalistBlack tfoot td {
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
+    <table class="minimalistBlack">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Point</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
     <script>
+        (async () => {
+            const response = await fetch("../collections/answers/items?f=json&properties=Username,Status");
+            const { features } = await response.json();
+            let result = [];
 
+            features.reduce(function (res, value) {
+                if (!res[value.properties.Username]) {
+                    res[value.properties.Username] = { Username: value.properties.Username, score: 0 };
+                    result.push(res[value.properties.Username])
+                }
+                res[value.properties.Username].score += value.properties.Status;
+                return res;
+            }, {})
+
+            const tbody = document.querySelector("tbody");
+
+            tbody.innerHTML = result
+                            .sort((a, b) => b.score - a.score)
+                            .map(entry=> `
+                                    <tr>
+                                        <td>${entry.Username}</td>
+                                        <td>${entry.score}</td>
+                                    </tr>` 
+                                ).join("");
+        })();
     </script>
 </body>
 
