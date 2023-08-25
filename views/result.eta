@@ -57,7 +57,7 @@
     </table>
     <script>
         (async () => {
-            const response = await fetch("../collections/answers/items?f=json&properties=Username,Status");
+            const response = await fetch("../collections/answers/items?f=json&limit=10000&properties=Username,Status");
             const { features } = await response.json();
             let result = [];
 
